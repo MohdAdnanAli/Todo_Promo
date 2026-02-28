@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>METB Todo — The Todo App No One Asked For (But You'll Keep Anyway)</title>
+  <meta name="description" content="Another todo app in 2026? Yes. Offline-first, Bun-powered, drag-drop bliss. Because why not reinvent the wheel when you can make it spin faster."/>
+  <meta name="theme-color" content="#4f46e5"/>
+  <link rel="icon" href="https://favicon.io/favicon.ico" type="image/x-icon"/>
+
+  <style>
+    /* ────────────────────────────────────── */
+    /* Existing styles unchanged – keeping it tight */
+    :root {
+      --primary: #4f46e5;
+      --primary-dark: #4338ca;
+      --bg: #0f172a;
+      --card: rgba(30, 41, 59, 0.6);
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --accent: #22d3ee;
+      --shadow: 0 10px 20px rgba(0,0,0,0.3);
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      scroll-behavior: smooth;
+    }
+
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+
+    header {
+      padding: 1.5rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(12px);
+      background: rgba(15, 23, 42, 0.7);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 800;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      border-radius: 9999px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      box-shadow: var(--shadow);
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px) scale(1.05);
+      box-shadow: 0 15px 30px rgba(79,70,229,0.5);
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: translateY(-2px) scale(1.05); }
+      50% { transform: translateY(-2px) scale(1.08); }
+    }
+
+    .btn-outline {
+      border: 1px solid var(--primary);
+      color: var(--primary);
+    }
+
+    .btn-outline:hover {
+      background: rgba(79,70,229,0.1);
+      transform: scale(1.05);
+    }
+
+    .hero {
+      padding: 8rem 0 4rem;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(50px);
+      transition: opacity 1s ease, transform 1s ease;
+    }
+
+    .hero.visible { opacity: 1; transform: translateY(0); }
+
+    .hero h1 {
+      font-size: clamp(2.8rem, 8vw, 5rem);
+      font-weight: 800;
+      margin-bottom: 1rem;
+      line-height: 1.1;
+      background: linear-gradient(90deg, #c084fc, var(--accent), #a5f3fc);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .teaser {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+      opacity: 0.9;
+    }
+
+    .hero p {
+      font-size: 1.3rem;
+      max-width: 720px;
+      margin: 0 auto 2rem;
+      color: var(--text-muted);
+    }
+
+    .badges {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin: 2rem 0;
+    }
+
+    .badge {
+      background: var(--card);
+      backdrop-filter: blur(8px);
+      padding: 0.6rem 1.2rem;
+      border-radius: 9999px;
+      font-size: 0.95rem;
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .badge:hover { transform: rotate(5deg) scale(1.1); }
+
+    .features {
+      padding: 6rem 0;
+      background: rgba(0,0,0,0.2);
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 2.8rem;
+      margin-bottom: 1.5rem;
+      font-weight: 700;
+      opacity: 0;
+      transform: translateY(50px);
+      transition: opacity 1s ease, transform 1s ease;
+    }
+
+    .teaser-subtitle {
+      text-align: center;
+      font-size: 1.4rem;
+      color: var(--accent);
+      margin-bottom: 3rem;
+      font-style: italic;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 1s ease 0.3s, transform 1s ease 0.3s;
+    }
+
+    .section-title.visible, .teaser-subtitle.visible { opacity: 1; transform: translateY(0); }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+    }
+
+    .card {
+      background: var(--card);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 1.2rem;
+      padding: 2rem;
+      transition: transform 0.4s ease, box-shadow 0.4s ease, opacity 0.6s ease;
+      opacity: 0;
+      transform: translateY(30px);
+      cursor: pointer;
+      position: relative;
+    }
+
+    .card.visible { opacity: 1; transform: translateY(0); }
+
+    .card:hover {
+      transform: translateY(-12px) scale(1.02);
+      box-shadow: var(--shadow);
+    }
+
+    .card h3 {
+      font-size: 1.6rem;
+      margin: 1rem 0 0.8rem;
+      color: var(--accent);
+    }
+
+    .card .teaser-line {
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: rgba(34, 211, 238, 0.85);
+      margin-bottom: 1rem;
+      font-style: italic;
+    }
+
+    .card .details {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s ease;
+    }
+
+    .card.expanded .details { max-height: 500px; }
+
+    .screenshot {
+      width: 100%;
+      border-radius: 1rem;
+      border: 1px solid rgba(255,255,255,0.12);
+      margin: 3rem 0;
+      box-shadow: var(--shadow);
+      opacity: 0;
+      transform: scale(0.95);
+      transition: opacity 1s ease, transform 1s ease;
+    }
+
+    .screenshot.visible { opacity: 1; transform: scale(1); }
+
+    .progress-bar {
+      width: 100%;
+      background: rgba(255,255,255,0.1);
+      border-radius: 9999px;
+      height: 8px;
+      margin: 1rem 0;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 9999px;
+      width: 0;
+      transition: width 2s ease;
+    }
+
+    footer {
+      text-align: center;
+      padding: 4rem 0 2rem;
+      color: var(--text-muted);
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .footer-tease {
+      font-size: 1.1rem;
+      color: var(--accent);
+      margin-top: 1rem;
+      font-style: italic;
+    }
+
+    @media (max-width: 768px) {
+      .hero { padding: 6rem 0 4rem; }
+      .section-title { font-size: 2.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container">
+      <nav>
+        <div class="logo">METB Todo</div>
+        <div>
+          <a href="https://github.com/mohdadnanali/todo-app" class="btn btn-outline" target="_blank" rel="noopener">View Source</a>
+          <a href="https://metb-todo.vercel.app" class="btn btn-primary" target="_blank" rel="noopener">Try Live Demo →</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <h1>Todo App. Reimagined for 2026.</h1>
+      <div class="teaser">A todo app no one asked for… yet here we are.</div>
+      <p>Offline-first. Bun-blazing. Drag-drop delight. Because the world clearly needed another todo list… right?</p>
+
+      <div class="badges">
+        <span class="badge">Offline (because WiFi lies)</span>
+        <span class="badge">PWA (app store? never heard of her)</span>
+        <span class="badge">Bun-powered (faster than your excuses)</span>
+        <span class="badge">Drag & Drop (procrastination approved)</span>
+        <span class="badge">Onboarding so good you'll actually finish setup</span>
+      </div>
+
+      <div style="margin: 2.5rem 0;">
+        <a href="https://metb-todo.vercel.app" class="btn btn-primary" style="font-size:1.3rem; padding:1rem 2.5rem;" target="_blank" rel="noopener">
+          Launch the Unnecessary → (You Know You Want To)
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="features" id="features">
+    <div class="container">
+      <h2 class="section-title">Why This Pointless Todo App Might Actually Win</h2>
+      <div class="teaser-subtitle">Over-engineered. Self-aware. Surprisingly useful.</div>
+
+      <div class="grid">
+        <div class="card">
+          <h3>Offline-First Power</h3>
+          <div class="teaser-line">Works when your internet ghosts you.</div>
+          <p>Your tasks persist locally via IndexedDB—no signal, no drama.</p>
+          <div class="details">
+            <ul>
+              <li>Real benefit: Tasks survive plane mode, blackouts, existential crises.</li>
+              <li>How: Browser DB magic (see storage.js).</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Blazing Fast with Bun</h3>
+          <div class="teaser-line">Because Node was too mainstream.</div>
+          <p>Up to 4× faster startup and API calls. Instant feels native.</p>
+          <div class="details">
+            <ul>
+              <li>Benefit: Add/edit tasks before you finish regretting life.</li>
+              <li>How: Bun runtime supremacy (server.ts).</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Installable PWA</h3>
+          <div class="teaser-line">Home screen real estate nobody asked to claim.</div>
+          <p>Feels like a real app. No store approval needed.</p>
+          <div class="details">
+            <ul>
+              <li>Benefit: One-tap access on every device.</li>
+              <li>How: Manifest + service worker combo.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Drag & Drop Organization</h3>
+          <div class="teaser-line">Rearrange tasks like you're playing Tetris with your life.</div>
+          <p>Intuitive reordering. Group by priority/category on a whim.</p>
+          <div class="details">
+            <ul>
+              <li>Benefit: Chaos → structured plan in seconds.</li>
+              <li>How: HTML5 Drag API with love.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Smart Onboarding Experience</h3>
+          <div class="teaser-line">We hold your hand so you don't ghost us immediately.</div>
+          <p>Tour + checklist + examples + 7-day drip emails. Retention hack.</p>
+          <div class="details">
+            <ul>
+              <li>Benefit: Users actually stick around (shocking, we know).</li>
+              <li>How: Step-by-step wizard with progress.</li>
+            </ul>
+            <div class="progress-bar"><div class="progress-fill" id="onboard-progress"></div></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Due Dates, Priorities, Categories</h3>
+          <div class="teaser-line">Classic features, but we didn't phone them in.</div>
+          <p>Deadlines, urgency tags, filtered views. Done right.</p>
+          <div class="details">
+            <ul>
+              <li>Benefit: Overdue tasks scream at you politely.</li>
+              <li>How: Clean metadata + sorting.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <img 
+        src="https://github.com/mohdadnanali/todo-app/raw/main/Screenshot_20260212_141313.png" 
+        alt="METB Todo App — because screenshots sell better than promises" 
+        class="screenshot"
+        loading="lazy"
+      />
+
+      <div style="text-align:center; margin: 4rem 0;">
+        <a href="https://metb-todo.vercel.app" class="btn btn-primary" style="font-size:1.4rem; padding:1.2rem 3rem;" target="_blank" rel="noopener">
+          Try the Overkill → (It's Free, What Do You Have to Lose?)
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>Built because someone had to try Bun on a todo app • <a href="https://github.com/mohdadnanali/todo-app" target="_blank" style="color:var(--accent);">github.com/mohdadnanali/todo-app</a></p>
+      <p class="footer-tease">A todo app no one asked for… but maybe, just maybe, the one you needed.</p>
+      <p style="margin-top:1.5rem;font-size:0.95rem;">© 2026 METB Todo – Unapologetically unnecessary.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Smooth scrolling
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+
+    // Scroll animations
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.hero, .section-title, .teaser-subtitle, .card, .screenshot').forEach(el => observer.observe(el));
+
+    // Expandable cards
+    document.querySelectorAll('.card').forEach(card => {
+      card.addEventListener('click', () => {
+        card.classList.toggle('expanded');
+      });
+    });
+
+    // Onboarding progress demo
+    const progressFill = document.getElementById('onboard-progress');
+    if (progressFill) {
+      setTimeout(() => { progressFill.style.width = '100%'; }, 500);
+    }
+  </script>
+
+</body>
+</html>
