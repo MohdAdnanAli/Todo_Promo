@@ -5,8 +5,56 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>METB Todo — The Todo App No One Asked For (But You'll Keep Anyway)</title>
   <meta name="description" content="Another todo app in 2026? Yes. Offline-first, Bun-powered, drag-drop bliss. Because why not reinvent the wheel when you can make it spin faster."/>
-  <meta name="theme-color" content="#4f46e5"/>
+  <meta name="theme-color" content="#0f172a"/>
   <link rel="icon" href="https://favicon.io/favicon.ico" type="image/x-icon"/>
+
+  <!-- Performance: Preconnect to external origins -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="https://github.com">
+  <link rel="dns-prefetch" href="https://vercel.com">
+
+  <!-- Performance: Critical inline styles for above-the-fold content -->
+  <style>
+    :root { --primary: #4f46e5; --primary-dark: #4338ca; --primary-light: #6366f1; --bg: #0f172a; --bg-alt: #1e293b; --card: rgba(30, 41, 59, 0.7); --text: #e2e8f0; --text-muted: #94a3b8; --text-dim: #64748b; --accent: #22d3ee; --accent-glow: rgba(34, 211, 238, 0.3); --success: #10b981; --shadow: 0 10px 20px rgba(0,0,0,0.3); --shadow-lg: 0 25px 50px rgba(0,0,0,0.4); --radius: 1rem; --radius-full: 9999px; }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+    body { font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: radial-gradient(ellipse at 20% 0%, rgba(79, 70, 229, 0.15) 0%, transparent 50%), radial-gradient(ellipse at 80% 100%, rgba(34, 211, 238, 0.1) 0%, transparent 50%), linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%); background-attachment: fixed; color: var(--text); line-height: 1.6; min-height: 100vh; overflow-x: hidden; }
+    body::before { content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px); background-size: 60px 60px; pointer-events: none; z-index: -1; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 1.25rem; }
+    header { padding: 1rem 0; position: fixed; top: 0; left: 0; right: 0; z-index: 1000; backdrop-filter: blur(20px); background: rgba(15, 23, 42, 0.8); border-bottom: 1px solid rgba(255,255,255,0.06); transition: all 0.3s ease; contain: layout style; }
+    header.scrolled { padding: 0.75rem 0; box-shadow: 0 4px 30px rgba(0,0,0,0.3); }
+    nav { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem; }
+    .logo { font-size: clamp(1.25rem, 4vw, 1.5rem); font-weight: 800; background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; letter-spacing: -0.5px; user-select: none; }
+    .nav-buttons { display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; padding: 0.625rem 1.25rem; border-radius: var(--radius-full); font-weight: 600; font-size: 0.9rem; text-decoration: none; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; border: none; outline: none; min-height: 44px; min-width: 44px; }
+    .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    .btn-primary { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); color: white; box-shadow: 0 4px 15px rgba(79, 70, 229, 0.4); }
+    .btn-primary:hover { background: var(--primary-dark); transform: translateY(-2px) scale(1.02); box-shadow: 0 8px 25px rgba(79, 70, 229, 0.5); }
+    .btn-primary:active { transform: translateY(0) scale(0.98); }
+    .btn-outline { background: transparent; color: var(--text); border: 1px solid rgba(255,255,255,0.15); }
+    .btn-outline:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.25); transform: scale(1.02); }
+    .hero { padding: 8rem 0 4rem; text-align: center; position: relative; opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; contain: layout style; }
+    .hero.visible { opacity: 1; transform: translateY(0); }
+    .hero h1 { font-size: clamp(2rem, 7vw, 4rem); font-weight: 800; margin-bottom: 1rem; line-height: 1.1; letter-spacing: -0.03em; background: linear-gradient(135deg, #c084fc 0%, var(--accent) 50%, #a5f3fc 100%); -webkit-background-clip: text; background-clip: text; color: transparent; text-wrap: balance; }
+    .teaser { font-size: clamp(1.1rem, 3vw, 1.4rem); font-weight: 600; color: var(--accent); margin-bottom: 1.25rem; opacity: 0; transform: translateY(20px); animation: fadeInUp 0.6s ease 0.3s forwards; }
+    .hero p { font-size: clamp(1rem, 2.5vw, 1.2rem); max-width: 680px; margin: 0 auto 1.75rem; color: var(--text-muted); opacity: 0; transform: translateY(20px); animation: fadeInUp 0.6s ease 0.4s forwards; }
+    @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+    .badges { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; margin: 1.5rem 0; opacity: 0; transform: translateY(20px); animation: fadeInUp 0.6s ease 0.5s forwards; }
+    .badge { background: var(--card); backdrop-filter: blur(10px); padding: 0.5rem 1rem; border-radius: var(--radius-full); font-size: 0.85rem; font-weight: 500; border: 1px solid rgba(255,255,255,0.08); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); white-space: nowrap; }
+    .badge:hover { transform: translateY(-3px) scale(1.05); border-color: var(--accent); box-shadow: 0 5px 20px var(--accent-glow); }
+    .hero-cta { margin: 2rem 0; opacity: 0; transform: translateY(20px); animation: fadeInUp 0.6s ease 0.6s forwards; }
+    .hero .btn-primary { font-size: clamp(1rem, 2.5vw, 1.15rem); padding: 0.875rem 2rem; }
+    .scroll-indicator { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 0.5rem; color: var(--text-dim); font-size: 0.75rem; opacity: 0; animation: fadeInUp 0.6s ease 1s forwards; }
+    .scroll-indicator .mouse { width: 24px; height: 38px; border: 2px solid var(--text-dim); border-radius: 12px; position: relative; }
+    .scroll-indicator .mouse::before { content: ''; position: absolute; top: 6px; left: 50%; transform: translateX(-50%); width: 4px; height: 8px; background: var(--accent); border-radius: 2px; animation: scroll 1.5s ease-in-out infinite; }
+    @keyframes scroll { 0%, 100% { opacity: 1; transform: translateX(-50%) translateY(0); } 50% { opacity: 0.3; transform: translateX(-50%) translateY(10px); } }
+    /* Performance: Use will-change for animated elements */
+    .card, .section-title, .screenshot, .cta-section { will-change: transform, opacity; }
+  </style>
+
+  <!-- Load fonts with font-display swap to prevent FOIT -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
   <style>
     /* ════════════════════════════════════════════ */
@@ -834,7 +882,10 @@
           src="https://github.com/mohdadnanali/todo-app/raw/main/Screenshot_20260212_141313.png" 
           alt="METB Todo App — because screenshots sell better than promises" 
           class="screenshot"
-          loading="eager"
+          width="1200"
+          height="675"
+          decoding="async"
+          fetchpriority="high"
           onload="this.parentElement.classList.add('loaded')"
         />
       </div>
@@ -855,7 +906,8 @@
     </div>
   </footer>
 
-  <script>
+  <!-- Performance: Defer JS execution until DOM is ready -->
+  <script defer>
     (function() {
       'use strict';
 
