@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
+  <head>
+    <meta charset="UTF-8" />
+    <title>Todo App - Official Docs & Promo Site</title>
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>METB Todo — The Todo App No One Asked For (But You'll Keep Anyway)</title>
   <meta name="description" content="Another todo app in 2026? Yes. Offline-first, Bun-powered, drag-drop bliss. Because why not reinvent the wheel when you can make it spin faster."/>
@@ -905,8 +907,11 @@
   <header id="header">
     <div class="container">
       <nav>
-        <div class="logo">METB Todo</div>
+<div class="logo">Todo App Docs</div>
         <div class="nav-buttons">
+          <a href="#features" class="btn btn-outline">Features</a>
+          <a href="#howto" class="btn btn-outline">How To</a>
+          <a href="#faq" class="btn btn-outline">FAQ</a>
           <a href="https://github.com/mohdadnanali/todo-app" class="btn btn-outline" target="_blank" rel="noopener noreferrer">View Source</a>
           <a href="https://metb-todo.vercel.app" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Try Live Demo →</a>
         </div>
@@ -1190,10 +1195,95 @@
           Try the Overkill → <span style="opacity:0.8">(It's Free. Your Productivity Will Thank You. Or You Won't—but Your Future Organized Self Will.)</span>
         </a>
       </div>
+
+      <!-- How to Use Section -->
+      <div class="gallery-section" id="howto">
+        <h2 class="section-title">How to Use (Yes, Even You Can Do This)</h2>
+        <div class="teaser-subtitle">Step-by-step instructions so basic, even your grandma could follow. No, really.</div>
+        
+        <div class="grid">
+          <div class="card">
+            <h3>Step 1: Get In</h3>
+            <div class="teaser-line">Sign up or continue as guest. Takes 30 seconds max.</div>
+            <p>Live demo has no account needed. Email/password for full encryption. Or guest mode for "testing the waters".</p>
+          </div>
+          <div class="card">
+            <h3>Step 2: Add Your Chaos</h3>
+            <div class="teaser-line">Click + or Cmd+Enter. Type. Hit Enter. Done.</div>
+            <p>Tasks auto-save. Drag to reorder. Categories, priorities, dates—add as you go.</p>
+          </div>
+          <div class="card">
+            <h3>Step 3: Organize Like a Pro</h3>
+            <div class="teaser-line">Drag ≡ handles or filter tabs. Chaos → order.</div>
+            <p>One-click filters (All/Pending/Complete). Drag-drop priorities. Themes in settings.</p>
+          </div>
+          <div class="card">
+            <h3>Step 4: Go Offline, Stay Productive</h3>
+            <div class="teaser-line">No internet? No problem. Everything works.</div>
+            <p>Tasks sync when back online. Install as PWA for app-like experience.</p>
+          </div>
+        </div>
+
+        <!-- Keyboard Shortcuts Section -->
+        <div class="gallery-section" id="shortcuts">
+          <h2 class="section-title">Keyboard Shortcuts (For the 1% Who Read This)</h2>
+          <div class="teaser-subtitle">Power user moves. Because mousing around is for amateurs.</div>
+          
+          <div class="grid">
+            <div class="card">
+              <h3>Global Hotkeys</h3>
+              <p><kbd>Cmd/Ctrl + K</kbd> Quick search • <kbd>Cmd/Ctrl + N</kbd> New task • <kbd>Cmd/Ctrl + ,</kbd> Settings</p>
+            </div>
+            <div class="card">
+              <h3>Task Navigation</h3>
+              <p><kbd>↑↓</kbd> Previous/Next task • <kbd>←→</kbd> Drag reorder • <kbd>Space</kbd> Toggle complete • <kbd>Enter</kbd> Edit</p>
+            </div>
+            <div class="card">
+              <h3>Filters & Views</h3>
+              <p><kbd>1</kbd> All • <kbd>2</kbd> Pending • <kbd>3</kbd> Complete • <kbd>Cmd/Ctrl + F</kbd> Category filter</p>
+            </div>
+            <div class="card">
+              <h3>Power Combos</h3>
+              <p><kbd>Cmd/Ctrl + Enter</kbd> Add & focus next • <kbd>Esc</kbd> Clear all filters • <kbd>Cmd/Ctrl + S</kbd> Force sync</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Data Storage Section -->
+        <div class="gallery-section" id="storage">
+          <h2 class="section-title">Data Storage & Offline Mode (Nerd Details)</h2>
+          <div class="teaser-subtitle">How we keep your todos safe even when the apocalypse hits your WiFi.</div>
+          
+          <div class="grid">
+            <div class="card">
+              <h3>Local Storage</h3>
+              <div class="teaser-line">IndexedDB primary + localStorage backup.</div>
+              <p>Everything works offline. Changes queue and sync when online. No data loss, ever.</p>
+            </div>
+            <div class="card">
+              <h3>Encryption</h3>
+              <div class="teaser-line">AES-256-GCM client-side. Zero-knowledge.</div>
+              <p>Your password never leaves your browser. Server sees encrypted gibberish only.</p>
+            </div>
+            <div class="card">
+              <h3>Sync Queue</h3>
+              <div class="teaser-line">Offline changes auto-sync. Conflict-free.</div>
+              <p>Smart merge logic. Last-write-wins with timestamps. No "whoops, your change got overwritten".</p>
+            </div>
+            <div class="card">
+              <h3>PWA Magic</h3>
+              <div class="teaser-line">Install once, use everywhere. Airplane mode approved.</div>
+              <p>Service worker caches everything. Background sync. Native app feel, zero App Store hassle.</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
   <footer>
+
+
     <div class="container">
       <p>🔐 AES-256-GCM Encryption • 🚀 Bun-Powered Backend • 💾 IndexedDB Storage • 📱 PWA Installable</p>
       <p><a href="https://github.com/mohdadnanali/todo-app" target="_blank" rel="noopener noreferrer">github.com/mohdadnanali/todo-app</a> • <a href="https://metb-todo.vercel.app" target="_blank" rel="noopener noreferrer">metb-todo.vercel.app</a></p>
