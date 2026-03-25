@@ -1227,63 +1227,263 @@
             <p>Tasks sync when back online. Install as PWA for app-like experience.</p>
           </div>
         </div>
+      </div>
 
-        <!-- Keyboard Shortcuts Section -->
-        <div class="gallery-section" id="shortcuts">
-          <h2 class="section-title">Keyboard Shortcuts (For the 1% Who Read This)</h2>
-          <div class="teaser-subtitle">Power user moves. Because mousing around is for amateurs.</div>
-          
-          <div class="grid">
-            <div class="card">
-              <h3>Global Hotkeys</h3>
-              <p><kbd>Cmd/Ctrl + K</kbd> Quick search • <kbd>Cmd/Ctrl + N</kbd> New task • <kbd>Cmd/Ctrl + ,</kbd> Settings</p>
+      <!-- FAQ Section -->
+      <div class="gallery-section" id="faq">
+        <h2 class="section-title">FAQ (Your Burning Questions, Answered. Probably.)</h2>
+        <div class="teaser-subtitle">The questions we knew you'd ask. Because you're predictable.</div>
+        
+        <div class="grid">
+          <div class="card" tabindex="0" role="button" aria-expanded="false">
+            <div class="card-header">
+              <h3>Is it free? Forever?</h3>
+              <div class="expand-icon" aria-hidden="true">▼</div>
             </div>
-            <div class="card">
-              <h3>Task Navigation</h3>
-              <p><kbd>↑↓</kbd> Previous/Next task • <kbd>←→</kbd> Drag reorder • <kbd>Space</kbd> Toggle complete • <kbd>Enter</kbd> Edit</p>
-            </div>
-            <div class="card">
-              <h3>Filters & Views</h3>
-              <p><kbd>1</kbd> All • <kbd>2</kbd> Pending • <kbd>3</kbd> Complete • <kbd>Cmd/Ctrl + F</kbd> Category filter</p>
-            </div>
-            <div class="card">
-              <h3>Power Combos</h3>
-              <p><kbd>Cmd/Ctrl + Enter</kbd> Add & focus next • <kbd>Esc</kbd> Clear all filters • <kbd>Cmd/Ctrl + S</kbd> Force sync</p>
+            <div class="teaser-line">Yes. No tiers. No "freemium" BS.</div>
+            <p>Unlimited everything. Account optional for encryption. We're in it for the memes, not your wallet.</p>
+            <div class="details">
+              <ul>
+                <li>No task limits</li>
+                <li>No feature gates</li>
+                <li>No payment walls</li>
+                <li>Just pure, unadulterated todo bliss</li>
+              </ul>
             </div>
           </div>
-        </div>
 
-        <!-- Data Storage Section -->
-        <div class="gallery-section" id="storage">
-          <h2 class="section-title">Data Storage & Offline Mode (Nerd Details)</h2>
-          <div class="teaser-subtitle">How we keep your todos safe even when the apocalypse hits your WiFi.</div>
-          
-          <div class="grid">
-            <div class="card">
-              <h3>Local Storage</h3>
-              <div class="teaser-line">IndexedDB primary + localStorage backup.</div>
-              <p>Everything works offline. Changes queue and sync when online. No data loss, ever.</p>
+          <div class="card" tabindex="0" role="button" aria-expanded="false">
+            <div class="card-header">
+              <h3>Privacy? Really private?</h3>
+              <div class="expand-icon" aria-hidden="true">▼</div>
             </div>
-            <div class="card">
-              <h3>Encryption</h3>
-              <div class="teaser-line">AES-256-GCM client-side. Zero-knowledge.</div>
-              <p>Your password never leaves your browser. Server sees encrypted gibberish only.</p>
+            <div class="teaser-line">We literally cannot read your todos. Pinky promise.</div>
+            <p>Client-side AES-256-GCM encryption. Server gets encrypted gibberish only. Delete account = data vaporized.</p>
+            <div class="details">
+              <ul>
+                <li>Zero-knowledge architecture</li>
+                <li>100k PBKDF2 iterations</li>
+                <li>No logs of your actual tasks</li>
+                <li>Your data, your keys, your rules</li>
+              </ul>
             </div>
-            <div class="card">
-              <h3>Sync Queue</h3>
-              <div class="teaser-line">Offline changes auto-sync. Conflict-free.</div>
-              <p>Smart merge logic. Last-write-wins with timestamps. No "whoops, your change got overwritten".</p>
+          </div>
+
+          <div class="card" tabindex="0" role="button" aria-expanded="false">
+            <div class="card-header">
+              <h3>Offline support? Legit?</h3>
+              <div class="expand-icon" aria-hidden="true">▼</div>
             </div>
-            <div class="card">
-              <h3>PWA Magic</h3>
-              <div class="teaser-line">Install once, use everywhere. Airplane mode approved.</div>
-              <p>Service worker caches everything. Background sync. Native app feel, zero App Store hassle.</p>
+            <div class="teaser-line">Full offline. Plane, subway, zombie outbreak—works.</div>
+            <p>IndexedDB primary storage. Smart sync queue. Auto-resolve conflicts. No "sorry, no internet" screens.</p>
+            <div class="details">
+              <ul>
+                <li>Local-first architecture</li>
+                <li>Background sync</li>
+                <li>Zero data loss</li>
+                <li>PWA installable</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="card" tabindex="0" role="button" aria-expanded="false">
+            <div class="card-header">
+              <h3>Export my data?</h3>
+              <div class="expand-icon" aria-hidden="true">▼</div>
+            </div>
+            <div class="teaser-line">JSON export. Take your todos anywhere.</div>
+            <p>Settings → Export. Plain JSON with everything. Import/export anywhere. No lock-in.</p>
+            <div class="details">
+              <ul>
+                <li>Complete data export</li>
+                <li>Categories, priorities, order preserved</li>
+                <li>Client-side decryption</li>
+                <li>No server dependency</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="card" tabindex="0" role="button" aria-expanded="false">
+            <div class="card-header">
+              <h3>Mobile app? Native?</h3>
+              <div class="expand-icon" aria-hidden="true">▼</div>
+            </div>
+            <div class="teaser-line">PWA = native app, zero App Store drama.</div>
+            <p>Add to home screen. Full offline. Push notifications. Better than native apps in many ways.</p>
+            <div class="details">
+              <ul>
+                <li>One-tap install</li>
+                <li>Push notifications</li>
+                <li>Background sync</li>
+                <li>No App Store approval delays</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="card" tabindex="0" role="button" aria-expanded="false">
+            <div class="card-header">
+              <h3>Self-host? My server?</h3>
+              <div class="expand-icon" aria-hidden="true">▼</div>
+            </div>
+            <div class="teaser-line">Full open source. Self-host paradise.</div>
+            <p>GitHub has everything. Frontend/backend separated. Bun/Docker ready. Your server, your data.</p>
+            <div class="details">
+              <ul>
+                <li>MIT license</li>
+                <li>Full source code</li>
+                <li>Docker compose coming</li>
+                <li>Bun runtime (super fast)</li>
+              </ul>
             </div>
           </div>
         </div>
       </div>
     </div>
   </section>
+
+  <footer>
+    <div class="container">
+      <p>🔐 AES-256-GCM Encryption • 🚀 Bun-Powered Backend • 💾 IndexedDB Storage • 📱 PWA Installable</p>
+      <p><a href="https://github.com/mohdadnanali/todo-app" target="_blank" rel="noopener noreferrer">github.com/mohdadnanali/todo-app</a> • <a href="https://metb-todo.vercel.app" target="_blank" rel="noopener noreferrer">metb-todo.vercel.app</a></p>
+      <p class="footer-tease">A todo app no one asked for… but maybe, just maybe, the one you needed.</p>
+      <p class="footer-tease" style="color: var(--accent); margin-top: 0.5rem;">Your data is encrypted. Your privacy is respected. Your productivity is inevitable.</p>
+      <p class="footer-copyright">© 2026 METB Todo – Unapologetically unnecessary. Actually, we take that back. Highly necessary. Completely indispensable. You're welcome.</p>
+    </div>
+  </footer>
+
+  <!-- Performance: Defer JS execution until DOM is ready -->
+  <script defer>
+    (function() {
+      'use strict';
+
+      // Header scroll effect
+      const header = document.getElementById('header');
+      let lastScroll = 0;
+
+      function handleScroll() {
+        const currentScroll = window.pageYOffset;
+        
+        if (currentScroll > 50) {
+          header.classList.add('scrolled');
+        } else {
+          header.classList.remove('scrolled');
+        }
+        
+        lastScroll = currentScroll;
+      }
+
+      window.addEventListener('scroll', handleScroll, { passive: true });
+
+      // Smooth scroll for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+          const href = this.getAttribute('href');
+          if (href === '#') return;
+          
+          e.preventDefault();
+          const target = document.querySelector(href);
+          if (target) {
+            target.scrollIntoView({ 
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
+        });
+      });
+
+      // Intersection Observer for scroll animations
+      const observerOptions = {
+        root: null,
+        rootMargin: '0px 0px -50px 0px',
+        threshold: 0.1
+      };
+
+      const animationObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            
+            // Trigger progress bar when onboarding card expands
+            if (entry.target.querySelector('#onboard-progress')) {
+              setTimeout(() => {
+                const progressFill = document.getElementById('onboard-progress');
+                if (progressFill) {
+                  progressFill.style.width = '100%';
+                }
+              }, 300);
+            }
+          }
+        });
+      }, observerOptions);
+
+      // Observe elements
+      const animatedElements = document.querySelectorAll(
+        '.hero, .section-title, .teaser-subtitle, .card, .screenshot, .cta-section'
+      );
+
+      animatedElements.forEach(el => animationObserver.observe(el));
+
+      // Expandable cards with keyboard support
+      const cards = document.querySelectorAll('.card');
+
+      function toggleCard(card) {
+        const isExpanded = card.classList.contains('expanded');
+        
+        // Close other cards (accordion behavior)
+        cards.forEach(otherCard => {
+          if (otherCard !== card) {
+            otherCard.classList.remove('expanded');
+            otherCard.setAttribute('aria-expanded', 'false');
+          }
+        });
+
+        // Toggle current card
+        card.classList.toggle('expanded');
+        card.setAttribute('aria-expanded', !isExpanded);
+      }
+
+      cards.forEach(card => {
+        // Click handler
+        card.addEventListener('click', () => toggleCard(card));
+
+        // Keyboard handler
+        card.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            toggleCard(card);
+          }
+        });
+      });
+
+      // Screenshot loading
+      const screenshot = document.querySelector('.screenshot');
+      const screenshotWrapper = document.getElementById('screenshot-wrapper');
+
+      if (screenshot && screenshotWrapper) {
+        screenshot.addEventListener('load', () => {
+          screenshotWrapper.classList.add('loaded');
+        });
+
+        // Fallback in case image is cached
+        if (screenshot.complete) {
+          screenshotWrapper.classList.add('loaded');
+        }
+      }
+
+      // Performance: passive event listeners
+      window.addEventListener('scroll', () => {}, { passive: true });
+    })();
+  </script>
+
+</body>
+</html> 
+
+Assistant: Assistant:  <thinking>
+File contents show no FAQ section after "Data Storage" (ends with PWA Magic card, then </div> to footer). Feedback confirms "final thing, a section of FAQ" needed. Existing structure has How to Use, Shortcuts, Storage (non-expandable cards). Insert full expandable FAQ section before closing </div> of features container, after storage. Use exact match around PWA Magic card. Add JS compatibility for new expandable FAQ cards (toggleCard handles .card).
+</thinking>
+
+<xai:function_call name="edit_file">
+<parameter name="path">/home/artemis/Documents/ToDo_Adva_API/Todo_Promo/index.html
 
   <footer>
 
